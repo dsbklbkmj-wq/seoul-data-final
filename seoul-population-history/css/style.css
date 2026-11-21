@@ -1,0 +1,258 @@
+:root {
+  --bg: #f3f1ec;
+  --panel: #fbfaf7;
+  --ink: #111111;
+  --muted: #6b6b6b;
+  --line: #111111;
+  --soft-line: #dddddd;
+  --accent: #2563eb;
+  --beige: #efeae0;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body {
+  font-family: 'Noto Sans KR', Pretendard, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 16px;
+  height: 100vh;
+  padding: 16px;
+}
+
+/* ---------- 왼쪽 패널 ---------- */
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+.card {
+  background: var(--panel);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+h1 {
+  font-family: 'Noto Serif KR', Georgia, serif;
+  font-size: 22px;
+  font-weight: 900;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+.desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin: 0; }
+
+.timeline-head { display: flex; align-items: baseline; gap: 14px; }
+.timeline-head .label {
+  font-family: 'Noto Serif KR', Georgia, serif;
+  font-weight: 700;
+  font-size: 17px;
+}
+.timeline-head .year {
+  font-family: 'Noto Serif KR', Georgia, serif;
+  font-size: 40px;
+  font-weight: 900;
+  letter-spacing: -1.5px;
+  line-height: 1;
+}
+
+input[type="range"] {
+  width: 100%;
+  margin: 4px 0 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.ticks {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: -4px;
+}
+
+.btn-play {
+  width: 100%;
+  background: #111;
+  color: #fff;
+  border: 0;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-play:hover { background: #2a2a2a; }
+.row { display: flex; gap: 10px; }
+.btn-outline {
+  flex: 1;
+  background: #fff;
+  border: 1.5px solid var(--soft-line);
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-outline:hover { border-color: #999; }
+
+.ctrl { display: flex; flex-direction: column; gap: 6px; }
+.ctrl-label {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #555;
+  font-weight: 700;
+}
+.chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.chip {
+  border: 1.5px solid var(--soft-line);
+  background: #fff;
+  border-radius: 999px;
+  padding: 4px 11px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.chip.active { background: #111; color: #fff; border-color: #111; }
+
+select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid var(--soft-line);
+  border-radius: 10px;
+  background: #fff;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.legend {
+  background: var(--beige);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.legend-dot {
+  display: inline-block;
+  width: 12px; height: 12px;
+  border: 1.8px solid var(--accent);
+  border-radius: 50%;
+  background: #fff;
+  vertical-align: -2px;
+  margin-right: 8px;
+}
+.ramp { display: flex; height: 10px; border-radius: 3px; overflow: hidden; border: 1px solid #c9c2b4; }
+.ramp span { flex: 1; }
+.ramp-labels { display: flex; justify-content: space-between; font-size: 11px; color: #555; margin-top: 3px; }
+.ramp-caption { font-size: 11px; color: #555; margin-top: 2px; }
+.hidden { display: none !important; }
+
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.stat .v { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
+.stat .k { font-size: 11px; color: var(--muted); }
+.up { color: #16a34a; }
+.down { color: #dc2626; }
+
+/* ---------- 지도 ---------- */
+.map-wrap {
+  position: relative;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #ececec;
+  min-height: 400px;
+}
+#map { position: absolute; inset: 0; background: #ececec; }
+
+.source {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 500;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid var(--soft-line);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: #444;
+  max-width: calc(100% - 28px);
+}
+
+.tooltip {
+  position: absolute;
+  z-index: 600;
+  pointer-events: none;
+  background: #fff;
+  border: 1.5px solid #111;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 13px;
+  min-width: 200px;
+  display: none;
+}
+.tooltip h3 { margin: 0 0 6px; font-size: 15px; }
+.tooltip h3 small { font-weight: 400; color: var(--muted); font-size: 12px; margin-left: 6px; }
+.tooltip table { border-collapse: collapse; width: 100%; }
+.tooltip td { padding: 2px 0; color: #444; }
+.tooltip td:last-child { text-align: right; font-weight: 600; color: #111; }
+
+.center-label {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #111;
+  line-height: 1.25;
+  text-shadow: 0 0 3px #fff, 0 0 3px #fff, 0 0 6px #fff;
+  white-space: nowrap;
+}
+
+/* 점 애니메이션 */
+.dot { transition: opacity 0.4s ease; }
+.dot-in { animation: dotIn 0.55s ease-out; }
+.dot-out { opacity: 0; }
+@keyframes dotIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Leaflet 줌 버튼 - 레퍼런스 스타일 */
+.leaflet-control-zoom { border: 1.5px solid #111 !important; border-radius: 8px !important; overflow: hidden; box-shadow: none !important; }
+.leaflet-control-zoom a {
+  background: #fff !important;
+  color: #111 !important;
+  width: 36px !important; height: 36px !important;
+  line-height: 36px !important;
+  font-size: 20px !important;
+  border-bottom: 1px solid #ddd !important;
+}
+.leaflet-control-zoom a:last-child { border-bottom: 0 !important; }
+.leaflet-container { font-family: inherit; }
+
+/* 로딩/에러 오버레이 */
+.overlay {
+  position: absolute; inset: 0; z-index: 700;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(243, 241, 236, 0.9);
+}
+.overlay-box {
+  background: #fff; border: 1.5px solid #111; border-radius: 12px;
+  padding: 18px 22px; font-size: 14px; line-height: 1.6; max-width: 480px;
+}
+.overlay-box code { background: #f1f1f1; padding: 1px 5px; border-radius: 4px; }
+
+@media (max-width: 900px) {
+  .app { grid-template-columns: 1fr; grid-template-rows: auto 70vh; height: auto; }
+  .panel { overflow: visible; }
+}

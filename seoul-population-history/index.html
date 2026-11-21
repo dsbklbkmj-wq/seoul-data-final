@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>서울 인구 밀도 역사 1995–2025</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- ===== 왼쪽 패널 ===== -->
+    <aside class="panel">
+      <section class="card">
+        <h1>서울 인구 밀도 역사</h1>
+        <p class="desc">
+          1995년부터 2025년까지 서울 25개 자치구의 주민등록인구 변화를 지도 위의 점으로 보여줍니다.
+          점 하나는 아래 <strong>코호트 스케일</strong>에서 정한 인구 수를 뜻하며, 구 위에 마우스를 올리면
+          해당 연도의 인구와 밀도를 볼 수 있습니다.
+        </p>
+      </section>
+
+      <section class="card">
+        <div class="timeline-head">
+          <span class="label">Timeline</span>
+          <span class="year" id="yearLabel">1995</span>
+        </div>
+        <input type="range" id="yearSlider" min="1995" max="2025" step="1" value="1995" aria-label="연도" />
+        <div class="ticks" id="ticks"></div>
+
+        <button class="btn-play" id="playBtn" type="button">▶ 재생</button>
+        <div class="row">
+          <button class="btn-outline" id="prevBtn" type="button">◀ 이전</button>
+          <button class="btn-outline" id="nextBtn" type="button">다음 ▶</button>
+        </div>
+
+        <div class="ctrl">
+          <span class="ctrl-label">속도</span>
+          <div class="chips" id="speedChips">
+            <button class="chip" data-speed="0.5" type="button">0.5x</button>
+            <button class="chip active" data-speed="1" type="button">1x</button>
+            <button class="chip" data-speed="2" type="button">2x</button>
+          </div>
+        </div>
+
+        <div class="ctrl">
+          <span class="ctrl-label">코호트 스케일</span>
+          <select id="scaleSelect" aria-label="코호트 스케일">
+            <option value="5000">점 1개 = 5,000명</option>
+            <option value="10000" selected>점 1개 = 10,000명</option>
+            <option value="20000">점 1개 = 20,000명</option>
+            <option value="50000">점 1개 = 50,000명</option>
+          </select>
+        </div>
+
+        <div class="ctrl">
+          <span class="ctrl-label">표시 방식</span>
+          <div class="chips" id="modeChips">
+            <button class="chip active" data-mode="dots" type="button">점</button>
+            <button class="chip" data-mode="density" type="button">밀도 색</button>
+            <button class="chip" data-mode="both" type="button">점 + 색</button>
+          </div>
+        </div>
+
+        <div class="ctrl">
+          <span class="ctrl-label">범례</span>
+          <div class="legend">
+            <div id="legendDot"><span class="legend-dot"></span><span id="legendDotText">점 1개 = 10,000명</span></div>
+            <div id="legendDensity" class="hidden">
+              <div class="ramp" id="ramp"></div>
+              <div class="ramp-labels" id="rampLabels"></div>
+              <div class="ramp-caption">인구밀도 (명/km²)</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <span class="ctrl-label">서울 전체 · <span id="statsYear">1995</span>년</span>
+        <div class="stats">
+          <div class="stat"><div class="v" id="statTotal">–</div><div class="k">총인구 (명)</div></div>
+          <div class="stat"><div class="v" id="statDensity">–</div><div class="k">인구밀도 (명/km²)</div></div>
+          <div class="stat"><div class="v" id="statYoy">–</div><div class="k">전년 대비</div></div>
+          <div class="stat"><div class="v" id="statSince">–</div><div class="k">1995년 대비</div></div>
+        </div>
+      </section>
+    </aside>
+
+    <!-- ===== 오른쪽 지도 ===== -->
+    <main class="map-wrap">
+      <div id="map"></div>
+      <div class="tooltip" id="tooltip"></div>
+      <div class="source">
+        출처: 서울 열린데이터광장 · 행정안전부 주민등록인구통계 &nbsp;|&nbsp; 지도 © OpenStreetMap contributors, © CARTO &nbsp;|&nbsp; 경계: southkorea/seoul-maps
+      </div>
+      <div class="overlay" id="overlay"><div class="overlay-box" id="overlayMsg">데이터를 불러오는 중…</div></div>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="data/districts.js"></script>
+  <script src="data/population.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
